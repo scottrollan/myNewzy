@@ -32,40 +32,24 @@
 @mixin lightButton {
   background-color: transparent;
   color: var(--light-button);
-  font-size: x-large;
-  padding: 1rem 2rem;
   border: 2px solid var(--light-button);
-  border-radius: 2rem;
   &:hover {
     background-color: var(--light-button);
     color: var(--black);
+    border: 2px solid var(--light-button);
     transition: all 0.3s ease-in-out;
   }
 }
 @mixin darkButton {
   background-color: transparent;
   color: var(--dark-button);
-  font-size: x-large;
-  padding: 1rem 2rem;
+
   border: 2px solid var(--dark-button);
-  border-radius: 2rem;
   &:hover {
     background-color: var(--dark-button);
     color: var(--light-button);
-    transition: all 0.3s ease-in-out;
-  }
-}
+    border: 2px solid var(--dark-button);
 
-@mixin darkButton {
-  background-color: transparent;
-  color: var(--black);
-  font-size: x-large;
-  padding: 1rem 2rem;
-  border: 2px solid var(--black);
-  border-radius: 2rem;
-  &:hover {
-    background-color: black;
-    color: var(--lightest-gray);
     transition: all 0.3s ease-in-out;
   }
 }

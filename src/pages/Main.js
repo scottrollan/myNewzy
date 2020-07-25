@@ -41,8 +41,10 @@ const Main = () => {
                     <div>
                       {h.author} <cite title="Source Title"></cite>
                     </div>
-                    <Button>Go to story</Button>
-                    <Button>Save for later</Button>
+                    <Button className={styles.cardButton}>Go to story</Button>
+                    <Button className={styles.cardButton}>
+                      Save for later
+                    </Button>
                   </footer>
                 </blockquote>
               </Card.Body>

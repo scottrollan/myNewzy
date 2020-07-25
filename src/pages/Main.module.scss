@@ -8,12 +8,19 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  margin: 1rem;
+  justify-content: space-evenly;
+  margin: 2rem;
   min-width: var(--card-width);
   max-width: var(--card-width);
 }
 .cardFooter {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
+}
+.cardButton {
+  @include lightButton;
+  max-width: 48%;
+  margin-top: 1rem;
 }
