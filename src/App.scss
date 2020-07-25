@@ -1,0 +1,10 @@
+@import './styles/stylesheet.scss';
+@import './styles/custom-media.scss';
+@import './styles/custom-properties.scss';
+
+.App {
+  font-family: ibmplexserif, Arial, Helvetica, sans-serif;
+  background-image: url('./assets/newspaper-background.png');
+  text-align: center;
+  min-height: 100vh;
+}

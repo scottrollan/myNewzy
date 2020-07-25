@@ -1,0 +1,78 @@
+@import './custom-media.scss';
+@import './stylesheet.scss';
+
+@font-face {
+  font-family: 'ibmplexserif';
+  src: url('./fonts/ibmplexserif-regular-webfont.woff2') format('woff2'),
+    url('./fonts/ibmplexserif-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  /* Colors */
+  --white: #ffffff;
+  --lightest-gray: #f3f5f7;
+  --light-gray: #c3c3c3;
+  --light-button: #c4ccd4;
+  --dark-button: #3c3c3c;
+  --dark-gray: #3f3f3f;
+  --overlay: rgba(0, 0, 0, 0.5);
+  --blue: #4183c4;
+  --normal-font-color: #212121;
+  --linq-green: #8ebb54;
+  --black: #000000;
+  /* Measurements */
+  --nav-height: 5rem;
+  --footer-height: 12rem;
+  --min-width-big-screen: 1252px;
+  --max-width-mobile: 1251px;
+  --card-width: 20rem;
+}
+
+@mixin lightButton {
+  background-color: transparent;
+  color: var(--light-button);
+  font-size: x-large;
+  padding: 1rem 2rem;
+  border: 2px solid var(--light-button);
+  border-radius: 2rem;
+  &:hover {
+    background-color: var(--light-button);
+    color: var(--black);
+    transition: all 0.3s ease-in-out;
+  }
+}
+@mixin darkButton {
+  background-color: transparent;
+  color: var(--dark-button);
+  font-size: x-large;
+  padding: 1rem 2rem;
+  border: 2px solid var(--dark-button);
+  border-radius: 2rem;
+  &:hover {
+    background-color: var(--dark-button);
+    color: var(--light-button);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@mixin darkButton {
+  background-color: transparent;
+  color: var(--black);
+  font-size: x-large;
+  padding: 1rem 2rem;
+  border: 2px solid var(--black);
+  border-radius: 2rem;
+  &:hover {
+    background-color: black;
+    color: var(--lightest-gray);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@mixin mediumWidthPadding {
+  padding: 0 calc(50% - 368px);
+  @media screen and (max-width: $breakpoint-medium) {
+    padding: 0 3vw;
+  }
+}
