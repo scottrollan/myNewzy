@@ -35,6 +35,7 @@ const Main = () => {
               <Card.Body>
                 <blockquote className="blockquote mb-0">
                   <p>{h.description}</p>
+                  <img className={styles.cardImage} src={h.urlToImage} alt="" />
                   <footer
                     className={[`blockquote-footer ${styles.cardFooter}`]}
                   >
