@@ -35,7 +35,15 @@
   }
 }
 .loggedInButton,
-.loggedOutButton,
+.loggedOutButton {
+  @include lightButton;
+  color: var(--light-gray);
+  border: 2px var(--google-red);
+  background-color: var(--google-red);
+  &hover {
+    background-color: var(--yellow);
+  }
+}
 .buttonLeft,
 .buttonRight {
   @include lightButton;

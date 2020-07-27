@@ -41,12 +41,19 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                   >
                     Go to story
                   </a>
+
                   <Button
                     className={styles.cardButton}
-                    disabled={isSignedIn ? false : 'disabled'}
+                    display={isSignedIn ? 'inherit' : 'none'}
                   >
                     Save for later
                   </Button>
+                  <div
+                    className={styles.cardButton}
+                    display={isSignedIn ? 'none' : 'inherit'}
+                  >
+                    Login to save
+                  </div>
                 </footer>
               </blockquote>
             </Card.Body>

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../actions';
 import { Button } from 'react-bootstrap';
 import styles from './Header.module.scss';
 
-const GoogleAuth = () => {
-  const [isSignedIn, setIsSignedIn] = useState(null);
-
-  let auth = null;
-
-  const doSignInThing = () => {
+class GoogleAuth extends React.Component {
+  componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({
@@ -16,42 +14,56 @@ const GoogleAuth = () => {
           scope: 'email',
         })
         .then(() => {
-          auth = window.gapi.auth2.getAuthInstance();
-          setIsSignedIn(auth.isSignedIn.get());
-          auth.isSignedIn.listen(onAuthChange);
+          this.auth = window.gapi.auth2.getAuthInstance();
+          this.onAuthChange(this.auth.isSignedIn.get());
+          this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
+  }
+
+  onAuthChange = (isSignedIn) => {
+    if (isSignedIn) {
+      this.props.signIn();
+    } else {
+      this.props.signOut();
+    }
   };
 
-  const onAuthChange = () => {
-    setIsSignedIn(auth.isSignedIn.get());
+  onSignInClick = () => {
+    this.auth.signIn();
   };
-  useEffect(() => {
-    doSignInThing();
-  }, []);
 
-  return (
-    <div>
-      <Button
-        onClick={() => window.gapi.auth2.getAuthInstance().signOut()}
-        style={{ display: isSignedIn ? 'inherit' : 'none' }}
-        className={styles.loggedInButton}
-      >
-        <i className="fab fa-google" style={{ color: '#DB4437' }}></i>
-        {'  '}
-        Logout
-      </Button>
-      <Button
-        onClick={() => window.gapi.auth2.getAuthInstance().signIn()}
-        style={{ display: isSignedIn ? 'none' : 'inherit' }}
-        className={styles.loggedOutButton}
-      >
-        <i className="fab fa-google" style={{ color: '#DB4437' }}></i>
-        {'  '}
-        Login
-      </Button>
-    </div>
-  );
+  onSignOutClick = () => {
+    this.aut.signOut();
+  };
+
+  renderAuthButton() {
+    if (this.props.isSignedIn === null) {
+      return null;
+    } else if (this.props.isSignedIn) {
+      return (
+        <Button onClick={this.onSignOutClick} className={styles.loggedInButton}>
+          <i className="fab fa-google"></i> {'  '}
+          Sign out
+        </Button>
+      );
+    } else {
+      return (
+        <Button onClick={this.onSignInClick} className={styles.loggedOutButton}>
+          <i className="fab fa-google"></i>
+          {'  '}
+          Sign in with Google
+        </Button>
+      );
+    }
+  }
+  render() {
+    return <div>{this.renderAuthButton()}</div>;
+  }
+}
+
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn };
 };
 
-export default GoogleAuth;
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
