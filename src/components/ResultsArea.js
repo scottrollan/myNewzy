@@ -3,7 +3,7 @@ import { Button, Card, CardGroup } from 'react-bootstrap';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
-const ResultsArea = ({ articles }) => {
+const ResultsArea = ({ articles, isSignedIn }) => {
   return (
     <CardGroup className={styles.cardGroup}>
       <ScrollToTop />
@@ -41,7 +41,12 @@ const ResultsArea = ({ articles }) => {
                   >
                     Go to story
                   </a>
-                  <Button className={styles.cardButton}>Save for later</Button>
+                  <Button
+                    className={styles.cardButton}
+                    disabled={isSignedIn ? false : 'disabled'}
+                  >
+                    Save for later
+                  </Button>
                 </footer>
               </blockquote>
             </Card.Body>

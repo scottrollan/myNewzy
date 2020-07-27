@@ -37,7 +37,7 @@ const GoogleAuth = () => {
         style={{ display: isSignedIn ? 'inherit' : 'none' }}
         className={styles.loggedInButton}
       >
-        <i class="fab fa-google" style={{ color: '#DB4437' }}></i>
+        <i className="fab fa-google" style={{ color: '#DB4437' }}></i>
         {'  '}
         Logout
       </Button>
@@ -46,7 +46,7 @@ const GoogleAuth = () => {
         style={{ display: isSignedIn ? 'none' : 'inherit' }}
         className={styles.loggedOutButton}
       >
-        <i class="fab fa-google" style={{ color: '#DB4437' }}></i>
+        <i className="fab fa-google" style={{ color: '#DB4437' }}></i>
         {'  '}
         Login
       </Button>
