@@ -1,11 +1,10 @@
 import React from 'react';
 import Main from './pages/Main';
-import './App.scss';
+import styles from './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      <h1>APP!</h1>
+    <div className={styles.App}>
       <Main />
     </div>
   );

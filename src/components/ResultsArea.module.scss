@@ -1,0 +1,50 @@
+@import '../styles/custom-media.scss';
+@import '../styles/custom-properties.scss';
+
+.cardGroup {
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  position: relative;
+}
+.card {
+  display: none;
+  flex-direction: column;
+  margin: 2rem;
+  min-width: var(--card-width);
+  max-width: var(--card-width);
+  border-radius: 2rem !important;
+  border: 2px var(--yellow) solid !important;
+  &:hover {
+    transition: all 0.3s ease-in-out;
+  }
+}
+.blockQuote {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.cardImage {
+  width: 100%;
+  margin: 1rem 0;
+}
+.cardFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cardButton {
+  @include aButton;
+  width: 48%;
+  margin-top: 1rem;
+}
+.scrollButton {
+  @include redButton;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 3px 10px;
+  z-index: 999;
+}

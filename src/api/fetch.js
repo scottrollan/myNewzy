@@ -6,8 +6,7 @@ const fetchArticles = async (searchParams) => {
   const res = await axios.get(
     `https://newsapi.org/v2/${searchParams}&apiKey=4a91afd2bdda4b18be76a2f996628566`
   );
-  returnedArticles = await [...res.data.articles];
-  console.log(returnedArticles);
+  returnedArticles = [returnedArticles, ...res.data.articles];
   return returnedArticles;
 };
 

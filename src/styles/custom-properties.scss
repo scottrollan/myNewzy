@@ -11,16 +11,15 @@
 :root {
   /* Colors */
   --white: #ffffff;
-  --lightest-gray: #f3f5f7;
-  --light-gray: #c3c3c3;
-  --light-button: #c4ccd4;
-  --dark-button: #3c3c3c;
-  --dark-gray: #3f3f3f;
+  --light-gray: #d3d9e8;
+  --light-button: #d3d9e8;
+  --dark-button: #121a35;
+  --dark-gray: #2d3959;
   --overlay: rgba(0, 0, 0, 0.5);
-  --blue: #4183c4;
-  --normal-font-color: #212121;
-  --linq-green: #8ebb54;
-  --black: #000000;
+  --red: #c53f3a;
+  --normal-font-color: #121a35;
+  --yellow: #f3c85f;
+  --black: #121a35;
   /* Measurements */
   --nav-height: 5rem;
   --footer-height: 12rem;
@@ -31,12 +30,12 @@
 
 @mixin lightButton {
   background-color: transparent;
-  color: var(--light-button);
-  border: 2px solid var(--light-button);
+  color: var(--dark-gray);
+  border: 2px solid var(--dark-gray);
   &:hover {
-    background-color: var(--light-button);
+    background-color: var(--light-gray);
     color: var(--black);
-    border: 2px solid var(--light-button);
+    border: 2px solid var(--black);
     transition: all 0.3s ease-in-out;
   }
 }
@@ -47,9 +46,47 @@
   border: 2px solid var(--dark-button);
   &:hover {
     background-color: var(--dark-button);
-    color: var(--light-button);
+    color: var(--light-gray);
     border: 2px solid var(--dark-button);
 
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@mixin yellowButton {
+  background-color: var(--yellow);
+  color: var(--normal-font-color);
+  border: 2px solid var(--black);
+  &:hover {
+    background-color: transparent;
+    color: var(--red);
+    border: 2px solid var(--red);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@mixin redButton {
+  background-color: transparent;
+  color: var(--red);
+  border: 2px solid var(--red);
+  &:hover {
+    background-color: var(--yellow);
+    color: var(--normal-font-color);
+    border: 2px solid var(--black);
+    transition: all 0.3s ease-in-out;
+  }
+}
+@mixin aButton {
+  background-color: transparent;
+  color: var(--dark-button);
+  border: 2px solid var(--dark-button);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  &:hover {
+    background-color: var(--dark-button);
+    color: var(--light-gray);
+    border: 2px solid var(--dark-button);
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
   }
 }

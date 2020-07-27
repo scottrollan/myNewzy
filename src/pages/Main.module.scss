@@ -1,30 +1,7 @@
-@import '../styles/custom-media.scss';
-@import '../styles/custom-properties.scss';
-
-.cardGroup {
-  display: flex;
-  justify-content: center;
+.main {
+  width: 100%;
 }
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin: 2rem;
-  min-width: var(--card-width);
-  max-width: var(--card-width);
-}
-.cardImage {
-  width: 80%;
-  margin: 1rem 10%;
-}
-.cardFooter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: flex-end;
-}
-.cardButton {
-  @include lightButton;
-  max-width: 48%;
-  margin-top: 1rem;
+.dashedLine {
+  height: 5px;
+  border-bottom: 3px var(--dark-gray) dashed;
 }

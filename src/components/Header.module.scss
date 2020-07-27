@@ -1,0 +1,65 @@
+@import '../styles/custom-media.scss';
+@import '../styles/custom-properties.scss';
+
+.header {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+}
+
+.menuLeft,
+.menuCenter,
+.menuRight {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuLeft:first-child > span,
+.menuCenter:first-child > span,
+.menuRight:first-child > span {
+  margin-right: auto;
+}
+
+.menuLeft:last-child > span,
+.menuCenter:last-child > span,
+.menuRight:last-child > span {
+  margin-left: auto;
+}
+.menuRight {
+  @media (pointer: coarse) {
+    @media screen and (max-width: $breakpoint-extra-large) {
+      display: none;
+    }
+  }
+}
+.loggedInButton,
+.loggedOutButton,
+.buttonLeft,
+.buttonRight {
+  @include lightButton;
+  color: var(--red);
+  border: 2px var(--red) solid;
+  &:hover {
+    background-color: var(--yellow);
+  }
+}
+.buttonLeft {
+  margin: 0 1rem 0.5rem 0;
+  @media (pointer: coarse) {
+    margin: 0.5rem;
+    font-size: x-small;
+    padding: 5px 8px;
+    background-color: var(--yellow);
+    border: 1px var(--yellow);
+    color: var(--normal-font-color);
+  }
+}
+.menuCenter {
+  @media (pointer: coarse) {
+    @media screen and (max-width: $breakpoint-extra-large) {
+      order: 5;
+    }
+  }
+}
