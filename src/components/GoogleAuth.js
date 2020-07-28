@@ -5,6 +5,8 @@ import { Button } from 'react-bootstrap';
 import styles from './Header.module.scss';
 
 class GoogleAuth extends React.Component {
+  userId = '';
+
   componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -15,10 +17,8 @@ class GoogleAuth extends React.Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(
-            this.auth.isSignedIn.get(),
-            this.auth.currentUser.get().getId()
-          );
+          this.userId = this.auth.currentUser.get().getId();
+          this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });

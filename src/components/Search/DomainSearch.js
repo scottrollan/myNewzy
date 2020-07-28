@@ -8,9 +8,9 @@ const DomainSearch = ({ fetch }) => {
   // let newSource = '';
   const [mySources, setMySources] = useState([
     { id: 'abc-news', name: 'ABC News' },
-    { id: 'business-insider', name: 'Business Insider' },
-    { id: 'google-news', name: 'Google News' },
-    { id: 'new-scientist', name: 'New Scientist' },
+    { id: 'associated-press', name: 'Associated Press' },
+    { id: 'buzzfeed', name: 'Buzzfeed' },
+    { id: 'msnbc', name: 'MSNBC' },
   ]);
 
   const addNewsSource = (newSource) => {
