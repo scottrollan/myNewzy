@@ -3,9 +3,16 @@
 
 .cardGroup {
   display: flex;
+  width: 100%;
   max-width: 100%;
   justify-content: center;
   position: relative;
+  @media (pointer: coarse) {
+    @media screen and (max-width: $breakpoint-large) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 }
 .card {
   display: none;
@@ -17,6 +24,11 @@
   border: 2px var(--yellow) solid !important;
   &:hover {
     transition: all 0.3s ease-in-out;
+  }
+  @media (pointer: coarse) {
+    @media screen and (max-width: $breakpoint-large) {
+      margin: 2rem 0;
+    }
   }
 }
 .blockQuote {

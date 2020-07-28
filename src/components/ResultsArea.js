@@ -12,10 +12,18 @@ const ResultsArea = ({ articles, isSignedIn }) => {
 
   const renderArticleButtons = () => {
     if (isSignedIn) {
-      return <Button className={styles.cardButton}>Save for later</Button>;
+      return (
+        <Button className={styles.cardButton} style={{ fontSize: 'small' }}>
+          Save for later
+        </Button>
+      );
     } else {
       return (
-        <Button onClick={() => onSignInClick()} className={styles.cardButton}>
+        <Button
+          onClick={() => onSignInClick()}
+          className={styles.cardButton}
+          style={{ fontSize: 'small' }}
+        >
           Login to save
         </Button>
       );
@@ -50,14 +58,14 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                   <img className={styles.cardImage} src={a.urlToImage} alt="" />
                 </a>
                 <footer className={styles.cardFooter}>
-                  <a
+                  <Button
                     href={a.url}
                     className={styles.cardButton}
                     target="_blank"
                     rel="noreferrer noopener"
                   >
                     Go to story
-                  </a>
+                  </Button>
                   {renderArticleButtons()}
                 </footer>
               </blockquote>
