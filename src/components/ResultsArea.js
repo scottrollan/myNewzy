@@ -1,9 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, Card, CardGroup } from 'react-bootstrap';
+import $ from 'jquery';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
 const ResultsArea = ({ articles, isSignedIn }) => {
+  const onSignInClick = () => {
+    $('#signInButton').click();
+  };
+
+  const renderArticleButtons = () => {
+    if (isSignedIn) {
+      return <Button className={styles.cardButton}>Save for later</Button>;
+    } else {
+      return (
+        <Button onClick={() => onSignInClick()} className={styles.cardButton}>
+          Login to save
+        </Button>
+      );
+    }
+  };
   return (
     <CardGroup className={styles.cardGroup}>
       <ScrollToTop />
@@ -41,19 +58,7 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                   >
                     Go to story
                   </a>
-
-                  <Button
-                    className={styles.cardButton}
-                    display={isSignedIn ? 'inherit' : 'none'}
-                  >
-                    Save for later
-                  </Button>
-                  <div
-                    className={styles.cardButton}
-                    display={isSignedIn ? 'none' : 'inherit'}
-                  >
-                    Login to save
-                  </div>
+                  {renderArticleButtons()}
                 </footer>
               </blockquote>
             </Card.Body>
@@ -64,4 +69,8 @@ const ResultsArea = ({ articles, isSignedIn }) => {
   );
 };
 
-export default ResultsArea;
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn };
+};
+
+export default connect(mapStateToProps)(ResultsArea);

@@ -15,15 +15,18 @@ class GoogleAuth extends React.Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(this.auth.isSignedIn.get());
+          this.onAuthChange(
+            this.auth.isSignedIn.get(),
+            this.auth.currentUser.get().getId()
+          );
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
   }
 
-  onAuthChange = (isSignedIn) => {
+  onAuthChange = (isSignedIn, userId) => {
     if (isSignedIn) {
-      this.props.signIn();
+      this.props.signIn(userId);
     } else {
       this.props.signOut();
     }
@@ -34,7 +37,7 @@ class GoogleAuth extends React.Component {
   };
 
   onSignOutClick = () => {
-    this.aut.signOut();
+    this.auth.signOut();
   };
 
   renderAuthButton() {
@@ -49,7 +52,11 @@ class GoogleAuth extends React.Component {
       );
     } else {
       return (
-        <Button onClick={this.onSignInClick} className={styles.loggedOutButton}>
+        <Button
+          onClick={this.onSignInClick}
+          className={styles.loggedOutButton}
+          id="signInButton"
+        >
           <i className="fab fa-google"></i>
           {'  '}
           Sign in with Google
