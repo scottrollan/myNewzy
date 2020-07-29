@@ -2,21 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Card, CardGroup } from 'react-bootstrap';
 import $ from 'jquery';
-import { Client } from '../api/saveArticle';
+import { Client } from '../api/sanityClient';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
-const ResultsArea = ({ articles, isSignedIn, userId }) => {
+const ResultsArea = ({ articles, isSignedIn }) => {
   const onSignInClick = () => {
     $('#signInButton').click();
   };
 
   const saveThisArticle = async (event) => {
-    const saveThisArticle = {
+    const saveButton = event.target.value;
+    document.getElementById(`${saveButton}`).style.visibility = 'hidden';
+
+    const savedArticle = {
       _type: 'article',
       user: event.target.getAttribute('user'),
       source: {
-        id: event.target.getAttribute('id'),
+        id: event.target.getAttribute('articleid'),
         name: event.target.getAttribute('name'),
       },
       author: event.target.getAttribute('author'),
@@ -27,8 +30,14 @@ const ResultsArea = ({ articles, isSignedIn, userId }) => {
       publishedAt: event.target.getAttribute('publishedat'),
       content: event.target.getAttribute('content'),
     };
-    let response = await Client.create(saveThisArticle);
-    console.log(response);
+    try {
+      const response = await Client.create(savedArticle);
+      if (response === null || response === undefined) {
+        throw 'Unable to save.';
+      }
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
@@ -36,14 +45,13 @@ const ResultsArea = ({ articles, isSignedIn, userId }) => {
       <ScrollToTop />
       {articles.map((a, index) => {
         const source = { ...a.source };
-        console.log(source);
         return (
           <Card
             key={`${a.publishedAt}${index}`}
             id={`${a.publishedAt}${index}`}
             className={styles.card}
             style={{
-              display: !a.description || !a.content ? 'none' : 'inherit',
+              display: !a.description ? 'none' : 'inherit',
             }}
           >
             <Card.Header>
@@ -65,6 +73,50 @@ const ResultsArea = ({ articles, isSignedIn, userId }) => {
                   <img className={styles.cardImage} src={a.urlToImage} alt="" />
                 </a>
                 <footer className={styles.cardFooter}>
+                  {' '}
+                  <div
+                    style={{
+                      width: '100%',
+                      position: 'relative',
+                      minHeight: '50px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Button
+                      id={`${a.publishedAt}${index}SaveButton`}
+                      onClick={(e) => saveThisArticle(e)}
+                      className={styles.cardButton}
+                      value={`${a.publishedAt}${index}SaveButton`}
+                      style={{
+                        position: 'absolute',
+                        fontSize: 'small',
+                        display: isSignedIn ? 'inline' : 'none',
+                        zIndex: '2',
+                        transform: 'translateY(-20px)',
+                        backgroundColor: 'white',
+                      }}
+                      user={window.gapi.auth2
+                        .getAuthInstance()
+                        .currentUser.get()
+                        .getId()}
+                      articleid={source.id ? source.id : 'null'}
+                      name={source.name ? source.name : ''}
+                      author={a.author ? a.author : ''}
+                      title={a.title ? a.title : ''}
+                      description={a.description ? a.description : ''}
+                      linktostory={a.url ? a.url : ''}
+                      urltoimage={a.urlToImage ? a.urlToImage : ''}
+                      publishedat={a.publishedAt ? a.publishedAt : new Date()}
+                      content={a.content ? a.content : ''}
+                    >
+                      Save for later
+                    </Button>
+                    <i
+                      className="fas fa-check-circle"
+                      style={{ position: 'absolute', zIndex: '1' }}
+                    ></i>
+                  </div>
                   <Button
                     href={a.url}
                     className={styles.cardButton}
@@ -72,29 +124,6 @@ const ResultsArea = ({ articles, isSignedIn, userId }) => {
                     rel="noreferrer noopener"
                   >
                     Go to story
-                  </Button>
-                  <Button
-                    onClick={(e) => saveThisArticle(e)}
-                    className={styles.cardButton}
-                    style={{
-                      fontSize: 'small',
-                      display: isSignedIn ? 'inline' : 'none',
-                    }}
-                    user={window.gapi.auth2
-                      .getAuthInstance()
-                      .currentUser.get()
-                      .getId()}
-                    id={source.id ? source.id : 'null'}
-                    name={source.name ? source.name : ''}
-                    author={a.author ? a.author : ''}
-                    title={a.title ? a.title : ''}
-                    description={a.description ? a.description : ''}
-                    linktostory={a.url ? a.url : ''}
-                    urltoimage={a.urlToImage ? a.urlToImage : ''}
-                    publishedat={a.publishedAt ? a.publishedAt : new Date()}
-                    content={a.content ? a.content : ''}
-                  >
-                    Save for later
                   </Button>
                   <Button
                     onClick={() => onSignInClick()}
@@ -117,7 +146,7 @@ const ResultsArea = ({ articles, isSignedIn, userId }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.isSignedIn, userId: state.auth.userId };
+  return { isSignedIn: state.auth.isSignedIn };
 };
 
 export default connect(mapStateToProps)(ResultsArea);

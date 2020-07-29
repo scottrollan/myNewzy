@@ -5,27 +5,32 @@ import { Button } from 'react-bootstrap';
 import styles from './Header.module.scss';
 
 class GoogleAuth extends React.Component {
-  userId = '';
+  state = {
+    userId: '',
+  };
 
   componentDidMount() {
-    window.gapi.load('client:auth2', () => {
-      window.gapi.client
-        .init({
-          clientId:
-            '363793726399-gmgdm1h7a62lum1m01l36v0b86uco1mv.apps.googleusercontent.com',
-          scope: 'email',
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.userId = this.auth.currentUser.get().getId();
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
+    this.doGapiStuff();
   }
+
+  doGapiStuff = () => {
+    window.gapi.load('client:auth2', async () => {
+      window.gapi.client.init({
+        clientId:
+          '363793726399-gmgdm1h7a62lum1m01l36v0b86uco1mv.apps.googleusercontent.com',
+        scope: 'email',
+      });
+      this.auth = await window.gapi.auth2.getAuthInstance();
+      console.log(this.auth);
+      this.userId = await this.auth.currentUser.get().getId();
+      this.onAuthChange(this.auth.isSignedIn.get(), await this.userId);
+      this.auth.isSignedIn.listen(this.onAuthChange);
+    });
+  };
 
   onAuthChange = (isSignedIn, userId) => {
     if (isSignedIn) {
+      console.log('From google auth onAuthChange: ', userId);
       this.props.signIn(userId);
     } else {
       this.props.signOut();

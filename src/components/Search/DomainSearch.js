@@ -5,7 +5,6 @@ import styles from './Search.module.scss';
 
 const DomainSearch = ({ fetch }) => {
   const [sources, setSources] = useState([]);
-  // let newSource = '';
   const [mySources, setMySources] = useState([
     { id: 'abc-news', name: 'ABC News' },
     { id: 'associated-press', name: 'Associated Press' },
@@ -15,7 +14,7 @@ const DomainSearch = ({ fetch }) => {
 
   const addNewsSource = (newSource) => {
     const valueArray = newSource.split(' ');
-    const idStr = valueArray.shift();
+    const idStr = valueArray.shift().concat('&language=en');
     const nameStr = valueArray.join(' ');
     const valueObject = { id: idStr, name: nameStr };
     setMySources([...mySources, valueObject]);

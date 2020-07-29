@@ -1,4 +1,5 @@
 export const signIn = (userId) => {
+  console.log('From actions/index: ', userId);
   return {
     type: 'SIGN_IN',
     id: userId,

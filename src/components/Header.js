@@ -1,14 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import GoogleAuth from './GoogleAuth';
 import styles from './Header.module.scss';
 
-const Header = ({ fetch }) => {
+const Header = ({ fetch, client, isSignedIn, userId }) => {
+  const seeMyArticles = () => {
+    client(`*[user == "${userId}"] | order(_createdAt desc)`);
+  };
+
   return (
     <div className={styles.header}>
       <div className={styles.menuLeft}>
         <span>
-          <Button className={styles.buttonLeft}>My Saved Articles</Button>
+          <Button
+            onClick={(e) => seeMyArticles(e)}
+            className={styles.buttonLeft}
+            style={{ display: isSignedIn ? 'initial' : 'none' }}
+          >
+            My Saved Articles
+          </Button>
           <GoogleAuth />
         </span>
       </div>
@@ -34,4 +45,8 @@ const Header = ({ fetch }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn, userId: state.auth.userId };
+};
+
+export default connect(mapStateToProps)(Header);
