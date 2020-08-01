@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DomainSearch from './DomainSearch';
+import Headlines from './Headlines';
 import KeywordSearch from './KeywordSearch';
 import styles from './Search.module.scss';
 
@@ -8,15 +8,15 @@ const SearchArea = ({ fetch }) => {
 
   return (
     <div className={styles.searchArea}>
-      <DomainSearch
-        fetch={(inputVaue) => fetch(`everything?sources=${inputVaue}`)}
+      <Headlines
+        fetch={() => fetch('latest_headlines?lang=en&media=True&country=US')}
       />
-      <div className={styles.dashedLine}></div>
       <KeywordSearch
         searcTerm={keyword}
         handleChange={(inputValue) => setKeyword(inputValue)}
-        handleSubmit={() => fetch(`everything?q=${keyword}`)}
+        handleSubmit={() => fetch(`search?media=True&lang=en&q=${keyword}`)}
       />
+      <div className={styles.dashedLine}></div>
     </div>
   );
 };

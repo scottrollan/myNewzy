@@ -21,8 +21,8 @@ const DomainSearch = ({ fetch }) => {
   };
 
   const renderSources = async () => {
-    const allTheseSources = await fetchSources();
-    const theseSources = allTheseSources.flat(1);
+    const theseSources = await fetchSources();
+    // console.log('theseSources: ', theseSources);
     setSources([...sources, ...theseSources]);
   };
 

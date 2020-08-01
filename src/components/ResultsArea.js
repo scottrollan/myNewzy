@@ -14,7 +14,12 @@ const ResultsArea = ({ articles, isSignedIn }) => {
   const saveThisArticle = async (event) => {
     const saveButton = event.target.value;
     document.getElementById(`${saveButton}`).style.visibility = 'hidden';
-
+    const photoFiles = event.target.getAttribute('media');
+    // const photoFile = photoFiles.files[0];
+    if (photoFiles) {
+      let imageRes = await Client.assets.upload('image', photoFiles);
+      console.log(imageRes._id);
+    }
     const savedArticle = {
       _type: 'article',
       user: event.target.getAttribute('user'),
@@ -24,16 +29,15 @@ const ResultsArea = ({ articles, isSignedIn }) => {
       },
       author: event.target.getAttribute('author'),
       title: event.target.getAttribute('title'),
-      description: event.target.getAttribute('description'),
-      linkToStory: event.target.getAttribute('linktostory'),
-      urlToImage: event.target.getAttribute('urltoimage'),
-      publishedAt: event.target.getAttribute('publishedat'),
-      content: event.target.getAttribute('content'),
+      content: event.target.getAttribute('summary'),
+      linkToStory: event.target.getAttribute('link'),
+      urlToImage: event.target.getAttribute('media'),
+      publishedAt: event.target.getAttribute('published_date'),
     };
     try {
       const response = await Client.create(savedArticle);
       if (response === null || response === undefined) {
-        throw 'Unable to save.';
+        throw alert('Unable to save.');
       }
     } catch (err) {
       alert(err);
@@ -44,33 +48,32 @@ const ResultsArea = ({ articles, isSignedIn }) => {
     <CardGroup className={styles.cardGroup}>
       <ScrollToTop />
       {articles.map((a, index) => {
-        const source = { ...a.source };
+        let shortSummary = '';
+        if (a.summary) {
+          shortSummary = a.summary.substring(0, 200);
+        }
         return (
           <Card
-            key={`${a.publishedAt}${index}`}
-            id={`${a.publishedAt}${index}`}
+            key={`${a.published_date}${index}`}
+            id={`${a.published_date}${index}`}
             className={styles.card}
             style={{
-              display: !a.description ? 'none' : 'inherit',
+              display: !a.summary ? 'none' : 'inherit',
             }}
           >
             <Card.Header>
               <h4>{a.title}</h4>
               {a.author ? `by ${a.author}` : null}
               <cite title="Source Title">
-                {a.author && a.source ? `- ${a.source.name}` : null}
-                {!a.author && a.source ? `${a.source.name}` : null}
+                {a.author && a.rights ? `- ${a.rights}` : null}
+                {!a.author && a.rights ? `${a.rights}` : null}
               </cite>
             </Card.Header>
             <Card.Body>
               <blockquote className={[`blockquote mb-0 ${styles.blockQuote}`]}>
-                <p>{a.description}</p>
-                <a
-                  href={a.urlToImage}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <img className={styles.cardImage} src={a.urlToImage} alt="" />
+                <p>{shortSummary}</p>
+                <a href={a.media} target="_blank" rel="noreferrer noopener">
+                  <img className={styles.cardImage} src={a.media} alt="" />
                 </a>
                 <footer className={styles.cardFooter}>
                   {' '}
@@ -84,10 +87,10 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                     }}
                   >
                     <Button
-                      id={`${a.publishedAt}${index}SaveButton`}
+                      id={`${a.published_date}${index}SaveButton`}
                       onClick={(e) => saveThisArticle(e)}
                       className={styles.cardButton}
-                      value={`${a.publishedAt}${index}SaveButton`}
+                      value={`${a.published_date}${index}SaveButton`}
                       style={{
                         position: 'absolute',
                         fontSize: 'small',
@@ -100,15 +103,16 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                         .getAuthInstance()
                         .currentUser.get()
                         .getId()}
-                      articleid={source.id ? source.id : 'null'}
-                      name={source.name ? source.name : ''}
+                      articleid={a._id ? a._id : 'null'}
+                      name={a.rights ? a.rights : ''}
                       author={a.author ? a.author : ''}
                       title={a.title ? a.title : ''}
-                      description={a.description ? a.description : ''}
-                      linktostory={a.url ? a.url : ''}
-                      urltoimage={a.urlToImage ? a.urlToImage : ''}
-                      publishedat={a.publishedAt ? a.publishedAt : new Date()}
-                      content={a.content ? a.content : ''}
+                      summary={a.summary ? a.summary : ''}
+                      link={a.link ? a.link : ''}
+                      media={a.media ? a.media : ''}
+                      published_date={
+                        a.published_date ? a.published_date : new Date()
+                      }
                     >
                       Save for later
                     </Button>
@@ -118,7 +122,7 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                     ></i>
                   </div>
                   <Button
-                    href={a.url}
+                    href={a.link}
                     className={styles.cardButton}
                     target="_blank"
                     rel="noreferrer noopener"

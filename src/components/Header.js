@@ -4,42 +4,25 @@ import { Button } from 'react-bootstrap';
 import GoogleAuth from './GoogleAuth';
 import styles from './Header.module.scss';
 
-const Header = ({ fetch, client, isSignedIn, userId }) => {
+const Header = ({ fetch, client, isSignedIn }) => {
   const seeMyArticles = () => {
+    const userId = window.gapi.auth2
+      .getAuthInstance()
+      .currentUser.get()
+      .getId();
     client(`*[user == "${userId}"] | order(_createdAt desc)`);
   };
 
   return (
     <div className={styles.header}>
-      <div className={styles.menuLeft}>
-        <span>
-          <Button
-            onClick={(e) => seeMyArticles(e)}
-            className={styles.buttonLeft}
-            style={{ display: isSignedIn ? 'initial' : 'none' }}
-          >
-            My Saved Articles
-          </Button>
-          <GoogleAuth />
-        </span>
+      <div>
+        <h1>
+          <em>Newzy</em>
+        </h1>
       </div>
-      <div className={styles.menuCenter}>
-        <span>
-          <h1>
-            <em>Newzy</em>
-          </h1>
-        </span>
-      </div>
-      <div className={styles.menuRight}>
-        <span>
-          <Button
-            className={styles.buttonRight}
-            variant="primary"
-            onClick={() => fetch('top-headlines?country=us')}
-          >
-            See Top Headlines
-          </Button>
-        </span>
+
+      <div>
+        <GoogleAuth />
       </div>
     </div>
   );
