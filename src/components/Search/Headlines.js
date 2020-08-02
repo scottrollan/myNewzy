@@ -5,11 +5,9 @@ import styles from './Search.module.scss';
 
 const Headlines = ({ fetch }) => {
   return (
-    <div>
-      <Button onClick={() => fetch()} className={styles.buttonLeft}>
-        Top Headlines
-      </Button>
-    </div>
+    <Button onClick={() => fetch()} className={styles.headlinesButton}>
+      Top Headlines
+    </Button>
   );
 };
 

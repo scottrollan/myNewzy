@@ -1,0 +1,43 @@
+@import '../styles/custom-properties.scss';
+@import '../styles/custom-media.scss';
+
+.confirmPopup {
+  display: flex;
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--overlay);
+  z-index: 990;
+}
+
+.whiteSpace {
+  width: 60%;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background: var(--light-gray);
+  z-index: 995;
+  @media (pointer: coarse) {
+    @media screen and (max-width: $breakpoint-medium) {
+      width: 90%;
+    }
+  }
+}
+
+.whiteSpace div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.whiteSpace button {
+  @include lightButton;
+  width: 40%;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Card, CardGroup } from 'react-bootstrap';
+import ConfirmPopup from '../components/ConfirmPopup';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
@@ -15,9 +16,10 @@ const SavedArticles = ({ articles, userId }) => {
             id={`${a.publishedAt}${index}`}
             className={styles.card}
             style={{
-              display: !a.description ? 'none' : 'inherit',
+              display: !a.content && !a.title ? 'none' : 'inherit',
             }}
           >
+            <ConfirmPopup articleId={a._id} />
             <Card.Header>
               <h4>{a.title}</h4>
               {a.author ? `by ${a.author}` : null}
@@ -29,6 +31,14 @@ const SavedArticles = ({ articles, userId }) => {
             <Card.Body>
               <blockquote className={[`blockquote mb-0 ${styles.blockQuote}`]}>
                 <p>{a.description}</p>
+                <Button
+                  href={a.url}
+                  className={styles.cardButton}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Go to story
+                </Button>
                 <a
                   href={a.urlToImage}
                   target="_blank"
@@ -37,13 +47,8 @@ const SavedArticles = ({ articles, userId }) => {
                   <img className={styles.cardImage} src={a.urlToImage} alt="" />
                 </a>
                 <footer className={styles.cardFooter}>
-                  <Button
-                    href={a.url}
-                    className={styles.cardButton}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Go to story
+                  <Button className={styles.deleteButton} variant="danger">
+                    Delete Story
                   </Button>
                 </footer>
               </blockquote>

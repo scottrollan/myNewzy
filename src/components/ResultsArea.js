@@ -14,12 +14,6 @@ const ResultsArea = ({ articles, isSignedIn }) => {
   const saveThisArticle = async (event) => {
     const saveButton = event.target.value;
     document.getElementById(`${saveButton}`).style.visibility = 'hidden';
-    const photoFiles = event.target.getAttribute('media');
-    // const photoFile = photoFiles.files[0];
-    if (photoFiles) {
-      let imageRes = await Client.assets.upload('image', photoFiles);
-      console.log(imageRes._id);
-    }
     const savedArticle = {
       _type: 'article',
       user: event.target.getAttribute('user'),
@@ -49,8 +43,10 @@ const ResultsArea = ({ articles, isSignedIn }) => {
       <ScrollToTop />
       {articles.map((a, index) => {
         let shortSummary = '';
-        if (a.summary) {
-          shortSummary = a.summary.substring(0, 200);
+        if (a.summary && a.summary.length > 199) {
+          shortSummary = `${a.summary.substring(0, 198)}...`;
+        } else if (a.summary && a.summary.length < 199) {
+          shortSummary = a.summary;
         }
         return (
           <Card

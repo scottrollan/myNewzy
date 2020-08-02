@@ -90,6 +90,16 @@
     transition: all 0.3s ease-in-out;
   }
 }
+@mixin redReverseButton {
+  background-color: transparent;
+  color: var(--red);
+  border: 2px solid var(--red);
+  &:hover {
+    background-color: var(--red);
+    color: var(--light-gray);
+    transition: all 0.3s ease-in-out;
+  }
+}
 
 @mixin mediumWidthPadding {
   padding: 0 calc(50% - 368px);

@@ -7,12 +7,13 @@
   display: flex;
   flex-direction: column;
   margin: 0 1rem;
+  align-items: center;
 }
 .dashedLine {
   height: 5px;
   border-bottom: 3px var(--dark-gray) dashed;
 }
-.domainArea,
+
 .keywordArea,
 .languageArea {
   width: 52%;
@@ -27,19 +28,13 @@
     }
   }
 }
-.domainArea {
-  flex-direction: column;
-  border-radius: 0 0 3rem 0;
-}
-.domainArea .buttonRow {
-  max-width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-.domainArea .sourceButton {
+.savedArticlesButton,
+.headlinesButton {
   @include yellowButton;
   margin: 0.5rem;
+}
+.headlinesButton {
+  align-self: flex-start;
 }
 .keywordArea {
   align-self: flex-end;

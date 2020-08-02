@@ -1,18 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
 import GoogleAuth from './GoogleAuth';
 import styles from './Header.module.scss';
 
-const Header = ({ fetch, client, isSignedIn }) => {
-  const seeMyArticles = () => {
-    const userId = window.gapi.auth2
-      .getAuthInstance()
-      .currentUser.get()
-      .getId();
-    client(`*[user == "${userId}"] | order(_createdAt desc)`);
-  };
-
+const Header = () => {
   return (
     <div className={styles.header}>
       <div>
@@ -21,7 +12,7 @@ const Header = ({ fetch, client, isSignedIn }) => {
         </h1>
       </div>
 
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <GoogleAuth />
       </div>
     </div>
