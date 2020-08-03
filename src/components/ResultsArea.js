@@ -7,6 +7,10 @@ import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
 const ResultsArea = ({ articles, isSignedIn }) => {
+  const myHeadlines = articles.filter(
+    (headline) => headline.rights !== 'sec.gov'
+  );
+
   const onSignInClick = () => {
     $('#signInButton').click();
   };
@@ -41,7 +45,7 @@ const ResultsArea = ({ articles, isSignedIn }) => {
   return (
     <CardGroup className={styles.cardGroup}>
       <ScrollToTop />
-      {articles.map((a, index) => {
+      {myHeadlines.map((a, index) => {
         let shortSummary = '';
         if (a.summary && a.summary.length > 199) {
           shortSummary = `${a.summary.substring(0, 198)}...`;
