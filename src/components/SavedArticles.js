@@ -1,25 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Card, CardGroup } from 'react-bootstrap';
+import $ from 'jquery';
 import ConfirmPopup from '../components/ConfirmPopup';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
-const SavedArticles = ({ articles, userId }) => {
+const SavedArticles = ({ articles }) => {
+  const openConfirm = (openThis) => {
+    console.log(openThis);
+    $(`#${openThis}`).css('display', 'flex');
+  };
+  const myArticles = articles.filter((article) => article._id);
   return (
     <CardGroup className={styles.savedCardGroup}>
       <ScrollToTop />
-      {articles.map((a, index) => {
+      {myArticles.map((a, index) => {
         return (
-          <Card
-            key={`${a.publishedAt}${index}`}
-            id={`${a.publishedAt}${index}`}
-            className={styles.card}
-            style={{
-              display: !a.content && !a.title ? 'none' : 'inherit',
-            }}
-          >
-            <ConfirmPopup articleId={a._id} />
+          <Card key={a._id} id={a._id} className={styles.card}>
+            <div className={styles.deleted} id={`$deleted${index}`}>
+              <h4>This article was deleted</h4>
+            </div>
+            <ConfirmPopup articleId={a._id} popupId={`popup${index}`} />
             <Card.Header>
               <h4>{a.title}</h4>
               {a.author ? `by ${a.author}` : null}
@@ -32,7 +34,7 @@ const SavedArticles = ({ articles, userId }) => {
               <blockquote className={[`blockquote mb-0 ${styles.blockQuote}`]}>
                 <p>{a.description}</p>
                 <Button
-                  href={a.url}
+                  href={a.linkToStory}
                   className={styles.cardButton}
                   target="_blank"
                   rel="noreferrer noopener"
@@ -47,7 +49,10 @@ const SavedArticles = ({ articles, userId }) => {
                   <img className={styles.cardImage} src={a.urlToImage} alt="" />
                 </a>
                 <footer className={styles.cardFooter}>
-                  <Button className={styles.deleteButton} variant="danger">
+                  <Button
+                    className={styles.deleteButton}
+                    onClick={() => openConfirm(`popup${index}`)}
+                  >
                     Delete Story
                   </Button>
                 </footer>
