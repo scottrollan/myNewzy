@@ -24,7 +24,6 @@ const Main = () => {
   }
 
   const client = async (val) => {
-    console.log('Passed parameters: ', val);
     const results = await Client.fetch(val);
     console.log(results);
     const theseArticles = [...results];
