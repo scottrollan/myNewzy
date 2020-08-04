@@ -118,7 +118,11 @@ const ResultsArea = ({ articles, isSignedIn }) => {
                     </Button>
                     <i
                       className="fas fa-check-circle"
-                      style={{ position: 'absolute', zIndex: '1' }}
+                      style={{
+                        position: 'absolute',
+                        zIndex: '1',
+                        display: isSignedIn ? 'inline' : 'none',
+                      }}
                     ></i>
                   </div>
                   <Button

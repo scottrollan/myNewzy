@@ -6,14 +6,17 @@ import ConfirmPopup from '../components/ConfirmPopup';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
-const SavedArticles = ({ articles }) => {
+const SavedArticles = ({ articles, isSignedIn }) => {
   const openConfirm = (openThis) => {
     console.log(openThis);
     $(`#${openThis}`).css('display', 'flex');
   };
   const myArticles = articles.filter((article) => article._id);
   return (
-    <CardGroup className={styles.savedCardGroup}>
+    <CardGroup
+      className={styles.savedCardGroup}
+      style={{ display: isSignedIn ? 'inline' : 'none' }}
+    >
       <ScrollToTop />
       {myArticles.map((a, index) => {
         return (
@@ -66,7 +69,7 @@ const SavedArticles = ({ articles }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { userId: state.auth.userId };
+  return { isSignedIn: state.auth.isSignedIn, userId: state.auth.userId };
 };
 
 export default connect(mapStateToProps)(SavedArticles);
