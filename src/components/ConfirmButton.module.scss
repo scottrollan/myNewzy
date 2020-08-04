@@ -39,5 +39,6 @@
 
 .whiteSpace button {
   @include lightButton;
+  background-color: var(--white);
   width: 40%;
 }

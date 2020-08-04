@@ -6,7 +6,7 @@ import ConfirmPopup from '../components/ConfirmPopup';
 import ScrollToTop from './ScrollToTop';
 import styles from './ResultsArea.module.scss';
 
-const SavedArticles = ({ articles, isSignedIn }) => {
+const SavedArticles = ({ articles, isSignedIn, userId }) => {
   const openConfirm = (openThis) => {
     console.log(openThis);
     $(`#${openThis}`).css('display', 'flex');
@@ -14,8 +14,8 @@ const SavedArticles = ({ articles, isSignedIn }) => {
   const myArticles = articles.filter((article) => article._id);
   return (
     <CardGroup
-      className={styles.savedCardGroup}
-      style={{ display: isSignedIn ? 'inline' : 'none' }}
+      className={styles.cardGroup}
+      style={{ display: isSignedIn ? 'flex' : 'none' }}
     >
       <ScrollToTop />
       {myArticles.map((a, index) => {

@@ -58,7 +58,7 @@ const ResultsArea = ({ articles, isSignedIn }) => {
             id={`${a.published_date}${index}`}
             className={styles.card}
             style={{
-              display: !a.summary ? 'none' : 'inherit',
+              display: !a.summary ? 'none' : 'initial',
             }}
           >
             <Card.Header>
